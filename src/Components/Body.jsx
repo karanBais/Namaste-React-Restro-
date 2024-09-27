@@ -47,7 +47,7 @@ const Body = () => {
 
   // If no restaurants found, show a message
   if (restaurantLIST.length === 0) {
-    return <div>No restaurants available</div>;
+    return <div className="text-center text-gray-500">No restaurants available</div>;
   }
 
   // Search Functionality
@@ -59,25 +59,31 @@ const Body = () => {
   };
 
   return (
-    <div className="body">
-      <div className="filter">
-        <div className="search-compo">
+    <div className="body px-4 md:px-8 lg:px-16">
+      {/* Filter and Search Bar */}
+      <div className="filter my-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        {/* Search Component */}
+        <div className="search-compo flex items-center gap-2">
           <input
             type="text"
-            className="search-text"
+            className="search-text p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Search restaurants..."
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
           />
           <button
-            className="search-btn"
+            className="search-btn bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             onClick={handleSearch} // Search button click triggers search
           >
             Search
           </button>
         </div>
+
+        {/* Top Rated Button */}
         <button
+          className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
           onClick={() => {
             const filteredList = restaurantLIST.filter(
               (res) => res.info.avgRatingString > 4
@@ -88,7 +94,9 @@ const Body = () => {
           Top Rated Restaurants
         </button>
       </div>
-      <div className="res-container">
+
+      {/* Restaurants Container */}
+      <div className="res-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredRestro.map((restaurant) => (
           <Restro key={restaurant.info.id} resData={restaurant} />
         ))}
